@@ -9,6 +9,14 @@ def home():
     all_posts_from_site = get_all_blog_posts()
     return render_template("index.html", all_posts = all_posts_from_site)
 
+@app.route('/about')
+def about():
+    return render_template("about.html")
+
+@app.route('/contact')
+def contact():
+    return render_template("contact.html")
+
 @app.route("/blog/<int:post_id>")
 def blog_post(post_id: int):
     all_posts_from_site = get_all_blog_posts()
@@ -19,7 +27,10 @@ def blog_post(post_id: int):
             post_data = post
             break
 
-    print(post_data)
+    print(post_data.m_id)
+    print(post_data.m_title)
+    print(post_data.m_subtitle)
+    print(post_data.m_body)
     return render_template("post.html", post=post_data)
 
 def get_all_blog_posts():
