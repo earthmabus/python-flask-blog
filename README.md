@@ -7,3 +7,9 @@ This project shows the ability of flask to
 - utilize multiple routes: **/** and **/blog/<post_id>**
 - url building by using url_for(...) for "Read" links to navigate to a blog page
 - utilize jinga to populate a blog.html template with python generated content (in this case, content that is retrieved in json, stored in a class, and unpacked in the template)
+
+# Future Ideas
+
+Ideas to extend the capabilities of the blog:
+- allow references to external articles
+- pull blog contents from a real data source
