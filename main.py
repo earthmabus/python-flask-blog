@@ -16,15 +16,15 @@ app = Flask(__name__)
 @app.route('/')
 def home():
     all_posts_from_site = get_all_blog_posts()
-    return render_template("index.html", all_posts = all_posts_from_site)
+    return render_template("index.html", title="Michael's Blog", subtitle="Get Right!", all_posts = all_posts_from_site)
 
 @app.route('/about')
 def about():
-    return render_template("about.html")
+    return render_template("about.html", title="Michael's Blog", subtitle="About")
 
 @app.route('/contact')
 def contact():
-    return render_template("contact.html")
+    return render_template("contact.html", title="Michael's Blog", subtitle="Contact Me")
 
 @app.route('/form-entry', methods=['GET', 'POST'])
 def receive_contact_us_data():
@@ -45,7 +45,7 @@ def receive_contact_us_data():
 
     account.send_email("earthmabus@hotmail.com", subject, body)
 
-    return render_template("contact_successful.html")
+    return render_template("contact_successful.html", title="Email Successfully Sent!", subtitle="")
 
 @app.route("/blog/<int:post_id>")
 def blog_post(post_id: int):
