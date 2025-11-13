@@ -1,6 +1,15 @@
-from flask import Flask, render_template
+import os
+
+from flask import Flask, render_template, request
+from email_account import EmailAccount
+import os
 import requests
 from post import Post
+
+GMAIL_ADDRESS = os.environ.get("GMAIL_ADDRESS")
+GMAIL_PASSWORD = os.environ.get("GMAIL_PASSWORD")
+
+account = EmailAccount(my_email=GMAIL_ADDRESS, my_password=GMAIL_PASSWORD)
 
 app = Flask(__name__)
 
@@ -16,6 +25,27 @@ def about():
 @app.route('/contact')
 def contact():
     return render_template("contact.html")
+
+@app.route('/form-entry', methods=['GET', 'POST'])
+def receive_contact_us_data():
+
+    if request.method == 'POST':
+        name = request.form['name']
+        email = request.form['email']
+        phone = request.form['phone']
+        message = request.form['message']
+    elif request.method == 'GET':
+        name = request.args.get('name', '')
+        email = request.args.get('email', '')
+        phone = request.args.get('phone', '')
+        message = request.args.get('message', '')
+
+    subject = f"BLOG Email from {name}"
+    body = f"Name: {name}\nEmail: {email}\nPhone: {phone}\n\nMessage:\n {message}"
+
+    account.send_email("earthmabus@hotmail.com", subject, body)
+
+    return render_template("contact_successful.html")
 
 @app.route("/blog/<int:post_id>")
 def blog_post(post_id: int):
